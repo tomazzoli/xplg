@@ -1,15 +1,18 @@
 package it.univr.xplg.io.importer;
 
+import it.univr.xplg.model.ProcessWithImpacts;
+import it.univr.xplg.model.TaskWithImpacts;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+import plg.annotations.Importer;
 import plg.exceptions.IllegalSequenceException;
 import plg.exceptions.UnsupportedPLGFileFormat;
+import plg.generator.IProgressVisualizer;
 import plg.generator.scriptexecuter.IntegerScriptExecutor;
 import plg.generator.scriptexecuter.StringScriptExecutor;
 import plg.model.FlowObject;
-
 import plg.model.data.DataObject;
 import plg.model.data.IDataObjectOwner;
 import plg.model.data.IntegerDataObject;
@@ -18,14 +21,21 @@ import plg.model.event.EndEvent;
 import plg.model.event.StartEvent;
 import plg.model.gateway.Gateway;
 import plg.model.sequence.Sequence;
+import plg.utils.Logger;
+import plg.utils.ZipHelper;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import it.univr.xplg.model.ProcessWithImpacts;
-import it.univr.xplg.model.TaskWithImpacts;
+import java.util.Vector;
 
-public class PLGImporter extends plg.io.importer.PLGImporter{
-
+@Importer(
+        name = "PLG file",
+        fileExtension = "plg"
+)
+public class PLGImporter extends FileImporter
+{
+    protected boolean importPythonScript = true;
     protected ProcessWithImpacts importFromPlg2(String filename) throws JDOMException, IOException, UnsupportedPLGFileFormat {
         FileInputStream input = new FileInputStream(filename);
         SAXBuilder builder = new SAXBuilder();
@@ -86,6 +96,25 @@ public class PLGImporter extends plg.io.importer.PLGImporter{
         for (Element ss : elements.getChildren("task")) {
             TaskWithImpacts t = p.newTask(ss.getAttributeValue("name"));
             p.removeComponent(t);
+            // inizio lettura del tag degli impatti
+            Vector<Integer> impatti = new Vector<Integer>();
+            for (Element imps :ss.getChildren("impacts"))
+            {
+                for(Element imp: imps.getChildren("impact"))
+                {
+                    String sval = imp.getValue();
+                    try {
+                        Integer val = Integer.parseInt(sval);
+                        impatti.add(val);
+                    }
+                    catch(NumberFormatException ne)
+                    {
+                        ;// do nothing
+                    }
+                }
+            }
+            t.setImpacts(impatti);
+            // fine lettura del tag degli impatti
             t.setComponentId(ss.getAttribute("id").getIntValue());
             p.registerComponent(t);
             String script = ss.getChildText("script").trim();
@@ -126,4 +155,33 @@ public class PLGImporter extends plg.io.importer.PLGImporter{
 
         return p;
     }
+
+    @Override
+    public ProcessWithImpacts importModel(String filename, IProgressVisualizer progress) {
+        progress.setIndeterminate(true);
+        progress.setText("Importing PLG file...");
+        progress.start();
+        Logger.instance().info("Starting process import");
+        try {
+            if (ZipHelper.isValid(new File(filename))) {
+                ProcessWithImpacts p = importFromPlg1(filename);
+                progress.finished();
+                return p;
+            } else {
+                ProcessWithImpacts p = importFromPlg2(filename);
+                progress.finished();
+                return p;
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        Logger.instance().info("Process import complete");
+        progress.finished();
+        return null;
+    }
+
+    protected ProcessWithImpacts importFromPlg1(String filename) throws UnsupportedPLGFileFormat {
+        throw new UnsupportedPLGFileFormat("This implementation currently support only second generation of PLG files");
+    }
+
 }

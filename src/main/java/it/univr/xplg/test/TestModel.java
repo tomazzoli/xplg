@@ -1,5 +1,7 @@
 package it.univr.xplg.test;
 
+import it.univr.xplg.io.exporter.PLGExporter;
+import it.univr.xplg.io.importer.PLGImporter;
 import org.deckfour.xes.model.XLog;
 import org.deckfour.xes.out.XesXmlSerializer;
 import plg.exceptions.IllegalSequenceException;
@@ -23,17 +25,25 @@ import java.util.Vector;
 
 public class TestModel extends plg.test.TestModel
 {
-    private static String processFilenameDir = "/Users/ctomazzoli/temp/";
+    private static final String processFilenameDir = "/Users/ctomazzoli/temp/";
 
     public static void main(String[] args) throws Exception
     {
-        Vector<Integer> impatti = new Vector<Integer> ();
-        impatti.add(new Integer(1));
-        impatti.add(new Integer(2));
-        impatti.add(new Integer(3));
+        Vector<Integer> impatti = new Vector<> ();
+        impatti.add(1);
+        impatti.add(2);
+        impatti.add(3);
         ProcessWithImpacts p = generateProcess(impatti);
+        PLGExporter pe = new PLGExporter();
+        String xmlFile = processFilenameDir+"model.xml";
+        pe.exportModel(p, xmlFile,new ProgressAdapter());
+        System.out.println("Export done");
+
+        PLGImporter pi = new PLGImporter();
+        ProcessWithImpacts pimp=pi.importModel(xmlFile);
+        System.out.println("Import done");
         GraphvizBPMNExporter e = new GraphvizBPMNExporter();
-        e.exportModel(p, processFilenameDir+"model.dot");
+        e.exportModel(pimp, processFilenameDir+"model.dot");
         System.out.println("done");
 
         ProcessGenerator.randomizeProcess(p, RandomizationConfiguration.BASIC_VALUES);

@@ -6,14 +6,9 @@ import org.deckfour.spex.SXDocument;
 import org.deckfour.spex.SXTag;
 import plg.annotations.Exporter;
 import plg.generator.IProgressVisualizer;
-import plg.io.exporter.FileExporter;
 import plg.io.importer.PLGImporter;
-import plg.model.Process;
 import plg.model.activity.Task;
-import plg.model.data.DataObject;
-import plg.model.data.GeneratedDataObject;
-import plg.model.data.IntegerDataObject;
-import plg.model.data.StringDataObject;
+import plg.model.data.*;
 import plg.model.event.EndEvent;
 import plg.model.event.StartEvent;
 import plg.model.gateway.ExclusiveGateway;
@@ -90,7 +85,8 @@ public class PLGExporter extends plg.io.exporter.PLGExporter
                         SXTag impTag = tTag.addChildNode("impacts");
                         for(Integer i:impatti)
                         {
-                            impTag.addCDataNode(i.toString());
+                            SXTag simpTag = impTag.addChildNode("impact");
+                            simpTag.addTextNode(i.toString().trim());
                         }
                     }
                 }
@@ -135,7 +131,10 @@ public class PLGExporter extends plg.io.exporter.PLGExporter
             for(DataObject dobj : model.getDataObjects()) {
                 SXTag dobjTag = elements.addChildNode("dataObject");
                 dobjTag.addAttribute("id", dobj.getId());
-                dobjTag.addAttribute("owner", dobj.getObjectOwner().getId());
+                IDataObjectOwner owner= dobj.getObjectOwner();
+                if(owner!=null) {
+                    dobjTag.addAttribute("owner", owner.getId());
+                }
                 if (dobj instanceof StringDataObject) {
                     dobjTag.addAttribute("name", dobj.getName());
                     dobjTag.addAttribute("type", "StringDataObject");
