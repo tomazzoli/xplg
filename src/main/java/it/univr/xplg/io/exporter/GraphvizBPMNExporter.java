@@ -3,7 +3,6 @@ package it.univr.xplg.io.exporter;
 import it.univr.xplg.model.ProcessWithImpacts;
 import it.univr.xplg.model.TaskWithImpacts;
 import org.apache.commons.io.FileUtils;
-import org.deckfour.spex.SXTag;
 import plg.annotations.Exporter;
 import plg.generator.IProgressVisualizer;
 import plg.model.activity.Task;
@@ -184,11 +183,11 @@ public class GraphvizBPMNExporter extends FileExporter
             String impactRepr= "";
             if (e instanceof TaskWithImpacts)
             {
-                Vector<Integer> impatti = ((TaskWithImpacts) e).getImpacts();
+                Vector<Double> impatti = ((TaskWithImpacts) e).getImpacts();
                 if ((impatti!=null)&&(impatti.size()>0))
                 {
                     StringBuffer impTag = new StringBuffer("impacts=\"(");
-                    for(Integer i:impatti)
+                    for(Double i:impatti)
                     {
                         impTag.append(i.toString());
                         impTag.append(",");

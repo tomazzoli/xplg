@@ -7,18 +7,18 @@ import java.util.Vector;
 
 public class TaskWithImpacts extends Task
 {
-    private Vector<Integer> impacts;
+    private Vector<Double>impacts;
 
     public TaskWithImpacts(Process owner, String name) {
         super(owner,name);
         this.setName(name);
     }
 
-    public Vector<Integer> getImpacts() {
+    public Vector<Double> getImpacts() {
         return impacts;
     }
 
-    public void setImpacts(Vector<Integer> impacts) {
+    public void setImpacts(Vector<Double> impacts) {
         this.impacts = impacts;
     }
 }

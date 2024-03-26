@@ -97,15 +97,19 @@ public class PLGImporter extends FileImporter
             TaskWithImpacts t = p.newTask(ss.getAttributeValue("name"));
             p.removeComponent(t);
             // inizio lettura del tag degli impatti
-            Vector<Integer> impatti = new Vector<Integer>();
+            Vector<Double> impatti = new Vector<Double>();
             for (Element imps :ss.getChildren("impacts"))
             {
                 for(Element imp: imps.getChildren("impact"))
                 {
                     String sval = imp.getValue();
-                    try {
-                        Integer val = Integer.parseInt(sval);
-                        impatti.add(val);
+                    try
+                    {
+                        if(sval!=null)
+                        {
+                            Double val = Double.parseDouble(sval);
+                            impatti.add(val);
+                        }
                     }
                     catch(NumberFormatException ne)
                     {

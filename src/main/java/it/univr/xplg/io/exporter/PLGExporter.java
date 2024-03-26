@@ -79,11 +79,11 @@ public class PLGExporter extends plg.io.exporter.PLGExporter
                 tTag.addAttribute("name", t.getName());
                 if (t instanceof TaskWithImpacts)
                 {
-                    Vector<Integer> impatti = ((TaskWithImpacts) t).getImpacts();
+                    Vector<Double> impatti = ((TaskWithImpacts) t).getImpacts();
                     if ((impatti!=null)&&(impatti.size()>0))
                     {
                         SXTag impTag = tTag.addChildNode("impacts");
-                        for(Integer i:impatti)
+                        for(Double i:impatti)
                         {
                             SXTag simpTag = impTag.addChildNode("impact");
                             simpTag.addTextNode(i.toString().trim());

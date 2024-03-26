@@ -29,10 +29,10 @@ public class TestModel extends plg.test.TestModel
 
     public static void main(String[] args) throws Exception
     {
-        Vector<Integer> impatti = new Vector<> ();
-        impatti.add(1);
-        impatti.add(2);
-        impatti.add(3);
+        Vector<Double> impatti = new Vector<Double> ();
+        impatti.add(1.0);
+        impatti.add(2.0);
+        impatti.add(3.0);
         ProcessWithImpacts p = generateProcess(impatti);
         PLGExporter pe = new PLGExporter();
         String xmlFile = processFilenameDir+"model.xml";
@@ -55,7 +55,7 @@ public class TestModel extends plg.test.TestModel
 
         System.out.println("finito tutto");
     }
-    private static ProcessWithImpacts generateProcess(Vector<Integer> impatti) throws IllegalSequenceException,
+    private static ProcessWithImpacts generateProcess(Vector<Double> impatti) throws IllegalSequenceException,
             InvalidProcessException {
         ProcessWithImpacts p = new ProcessWithImpacts("test");
         StartEvent start = p.newStartEvent();
