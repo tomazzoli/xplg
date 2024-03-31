@@ -125,6 +125,7 @@ public class TraceGenerator extends ThreadWithException<XTrace> {
         IImpactsEstimator stimatore = factory.getInstance(nomeEstimatore);
         Vector<Double> risultato = stimatore.getImpacts(thisExecutionImpacts);
         String result = risultato.toString();
+        System.out.println("impatti : "+result);
         return result;
     }
     /**

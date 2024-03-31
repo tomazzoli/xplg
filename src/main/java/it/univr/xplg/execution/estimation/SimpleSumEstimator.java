@@ -30,7 +30,7 @@ public class SimpleSumEstimator extends ImpactsEstimator
                         Vector<Double> impatti = t.getImpacts();
                         somma = somma + impatti.get(i);
                     }
-                    result.set(i,somma);
+                    result.add(somma);
                 }
             }
         }

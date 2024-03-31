@@ -20,9 +20,10 @@ public class EstimatorFactory
     public ImpactsEstimator getInstance(String nomeClasse)
     {
         ImpactsEstimator result=null;
+        String fullName = classiEstimaotri.get(nomeClasse);
         try
         {
-            Class<?> concreteClass = Class.forName(nomeClasse);
+            Class<?> concreteClass = Class.forName(fullName);
             Constructor<?> ct= concreteClass.getConstructor();
             result = (ImpactsEstimator) ct.newInstance();
         }
