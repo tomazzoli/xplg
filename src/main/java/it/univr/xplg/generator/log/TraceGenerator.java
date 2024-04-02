@@ -125,7 +125,7 @@ public class TraceGenerator extends ThreadWithException<XTrace> {
         IImpactsEstimator stimatore = factory.getInstance(nomeEstimatore);
         Vector<Double> risultato = stimatore.getImpacts(thisExecutionImpacts);
         String result = risultato.toString();
-        System.out.println("impatti : "+result);
+        //System.out.println("impatti : "+result);
         return result;
     }
     /**
@@ -257,7 +257,7 @@ public class TraceGenerator extends ThreadWithException<XTrace> {
      */
     private void recordImpacts(XTrace trace, Vector<Double> taskImpacts, XEvent... events) throws InvalidScript {
         String caseId = XLogHelper.getName(trace);
-        System.out.println("recordImpacts :" + taskImpacts);
+        //System.out.println("recordImpacts :" + taskImpacts);
         String label = TaskWithImpacts.IMPACT_LABEL;
         for (XEvent event : events) {
             XLogHelper.decorateElement(event, label, taskImpacts.toString());

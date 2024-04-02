@@ -7,7 +7,7 @@ import java.util.Vector;
 
 public class TaskWithImpacts extends Task
 {
-        public static final String IMPACT_LABEL="impatto";
+        public static final String IMPACT_LABEL="impacts";
 
         private Vector<Double>impacts;
 
