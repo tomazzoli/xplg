@@ -24,37 +24,37 @@ public class GenerateLog implements Callable<Integer> {
     @CommandLine.Option(names = {"-o", "--outputXMLFilePath"}, required = true, description = "output file containing the xml description of all traces")
     private String outXmlFile;
 
-    @CommandLine.Option(names = {"-t", "--numberOfTraces"}, required = false, description = "max number of traces to be generated, in omitted default is 100")
+    @CommandLine.Option(names = {"-nt", "--numberOfTraces"}, required = false, description = "max number of traces to be generated, in omitted default is 100")
     private int numberOfTraces=1000;
 
-    @CommandLine.Option(names = {"-ab", "--ANDBranches"}, required = false, description = "properties file containing all parameters")
+    @CommandLine.Option(names = {"-rab", "--ANDBranches"}, required = false, description = "RandomizationConfiguration : max AND branches")
     private int ANDBranches=5;
 
-    @CommandLine.Option(names = {"-xb", "--XORBranches"}, required = false, description = "properties file containing all parameters")
+    @CommandLine.Option(names = {"-rxb", "--XORBranches"}, required = false, description = "RandomizationConfiguration : max XOR branches")
     private int XORBranches=5;
 
-    @CommandLine.Option(names = {"-lw", "--loopWeight"}, required = false, description = "properties file containing all parameters")
+    @CommandLine.Option(names = {"-rlw", "--loopWeight"}, required = false, description = "RandomizationConfiguration : loop weight")
     private double loopWeight=0.1;
 
-    @CommandLine.Option(names = {"-sa", "--singleActivityWeight"}, required = false, description = "properties file containing all parameters")
+    @CommandLine.Option(names = {"-rsa", "--singleActivityWeight"}, required = false, description = "RandomizationConfiguration : single activity weight")
     private double singleActivityWeight=0.2;
 
-    @CommandLine.Option(names = {"-sw", "--skipWeight"}, required = false, description = "properties file containing all parameters")
+    @CommandLine.Option(names = {"-rsw", "--skipWeight"}, required = false, description = "RandomizationConfiguration : skip weight")
     private double skipWeight=0.1;
 
-    @CommandLine.Option(names = {"-sq", "--sequenceWeight"}, required = false, description = "properties file containing all parameters")
+    @CommandLine.Option(names = {"-rsq", "--sequenceWeight"}, required = false, description = "RandomizationConfiguration : sequence weight")
     private double sequenceWeight=0.7;
 
-    @CommandLine.Option(names = {"-aw", "--ANDWeight"}, required = false, description = "properties file containing all parameters")
+    @CommandLine.Option(names = {"-raw", "--ANDWeight"}, required = false, description = "RandomizationConfiguration : AND weight")
     private double ANDWeight=0.3;
 
-    @CommandLine.Option(names = {"-xw", "--XORWeight"}, required = false, description = "properties file containing all parameters")
+    @CommandLine.Option(names = {"-rxw", "--XORWeight"}, required = false, description = "RandomizationConfiguration : XOR weight")
     private double XORWeight=0.3;
 
-    @CommandLine.Option(names = {"-dt", "--maxDepth"}, required = false, description = "properties file containing all parameters")
+    @CommandLine.Option(names = {"-rdt", "--maxDepth"}, required = false, description = "RandomizationConfiguration : max depth")
     private int maxDepth=3;
 
-    @CommandLine.Option(names = {"-op", "--dataObjectProbability"}, required = false, description = "properties file containing all parameters")
+    @CommandLine.Option(names = {"-rop", "--dataObjectProbability"}, required = false, description = "RandomizationConfiguration : dataObject Probability")
     private double dataObjectProbability=0.1;
 
     @Override
